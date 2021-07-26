@@ -6,7 +6,7 @@ const AuthenticationStack = () => {
 
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen name={WELCOME} component={Welcome} />
+      {/* <AuthStack.Screen name={WELCOME} component={Welcome} />
       <AuthStack.Screen
         name={REGISTER}
         component={Register}
@@ -23,7 +23,7 @@ const AuthenticationStack = () => {
           headerTransparent: true,
           headerTitle: false,
         }}
-      />
+      /> */}
     </AuthStack.Navigator>
   );
 };
