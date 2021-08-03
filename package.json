@@ -1,5 +1,5 @@
 {
-  "name": "NutritionCoach",
+  "name": "nutrition-coach",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,14 +10,18 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-picker/picker": "^1.16.4",
     "@react-navigation/native": "^5.9.4",
+    "formik": "^2.2.9",
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
-    "react-native-screens": "^3.4.0"
+    "react-native-screens": "^3.4.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
