@@ -14,8 +14,12 @@ const BirthdaySelector = ({value, onChange}) => {
         flex: 1,
         paddingTop: height * 0.2,
       }}>
-      <Text>Birthday</Text>
-      <DatePicker value={value} onChange={onChange} />
+      <Text style={{paddingHorizontal: 25, fontSize: 18, paddingBottom: 5}}>
+        When were you born?
+      </Text>
+      <View style={{paddingHorizontal: 25}}>
+        <DatePicker value={value} onChange={onChange} />
+      </View>
     </View>
   );
 };
