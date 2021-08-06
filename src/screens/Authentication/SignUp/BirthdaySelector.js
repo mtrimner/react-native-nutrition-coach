@@ -5,7 +5,8 @@ import DatePicker from '../../../components/DatePicker';
 
 const {height, width} = Dimensions.get('window');
 
-const BirthdaySelector = ({value, onChange}) => {
+const BirthdaySelector = ({value, onChange, error, touched}) => {
+  console.log(error);
   return (
     <View
       style={{

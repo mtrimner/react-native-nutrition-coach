@@ -46,7 +46,8 @@ const HEIGHTOPTIONS = {
   213: '7 feet  ',
 };
 
-const HeightSelector = ({onChange, selectedValue, onPress}) => {
+const HeightSelector = ({onChange, selectedValue, onPress, error, touched}) => {
+  console.log(error);
   return (
     <View
       style={{
