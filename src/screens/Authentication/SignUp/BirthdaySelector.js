@@ -1,9 +1,11 @@
 import React from 'react';
 import {Text, View, Dimensions} from 'react-native';
 
+import DatePicker from '../../../components/DatePicker';
+
 const {height, width} = Dimensions.get('window');
 
-const BirthdaySelector = () => {
+const BirthdaySelector = ({value, onChange}) => {
   return (
     <View
       style={{
@@ -13,6 +15,7 @@ const BirthdaySelector = () => {
         paddingTop: height * 0.2,
       }}>
       <Text>Birthday</Text>
+      <DatePicker value={value} onChange={onChange} />
     </View>
   );
 };
