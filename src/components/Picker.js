@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, Platform, Pressable, Modal} from 'react-native';
+import {View, Text, Platform, Pressable, Modal, StyleSheet} from 'react-native';
 import {Picker as RnPicker} from '@react-native-picker/picker';
 
-const Picker = ({selectedValue, options, onChange}) => {
+const Picker = ({selectedValue, options, onChange, onPress}) => {
   const [show, setShow] = useState(false);
 
   const onCancelPress = () => {
@@ -11,6 +11,7 @@ const Picker = ({selectedValue, options, onChange}) => {
 
   const onDonePress = () => {
     setShow(false);
+    onPress();
   };
 
   const renderPicker = (
@@ -60,10 +61,14 @@ const Picker = ({selectedValue, options, onChange}) => {
                         overFlow: 'hidden',
                       }}>
                       <View style={{marginTop: 20}}>{renderPicker}</View>
-                      <Pressable onPress={onCancelPress}>
+                      <Pressable
+                        onPress={onCancelPress}
+                        style={[styles.btn, {left: 0}]}>
                         <Text>Cancel</Text>
                       </Pressable>
-                      <Pressable onPress={onDonePress}>
+                      <Pressable
+                        onPress={onDonePress}
+                        style={[styles.btn, {right: 0}]}>
                         <Text>Done</Text>
                       </Pressable>
                     </View>
@@ -79,3 +84,15 @@ const Picker = ({selectedValue, options, onChange}) => {
 };
 
 export default Picker;
+
+const styles = StyleSheet.create({
+  btn: {
+    position: 'absolute',
+    top: 0,
+    height: 42,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

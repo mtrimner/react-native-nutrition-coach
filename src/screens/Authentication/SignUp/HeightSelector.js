@@ -46,7 +46,7 @@ const HEIGHTOPTIONS = {
   213: '7 feet  ',
 };
 
-const HeightSelector = ({onChange, selectedValue}) => {
+const HeightSelector = ({onChange, selectedValue, onPress}) => {
   return (
     <View
       style={{
@@ -63,6 +63,7 @@ const HeightSelector = ({onChange, selectedValue}) => {
           options={HEIGHTOPTIONS}
           onChange={onChange}
           selectedValue={selectedValue}
+          onPress={onPress}
         />
       </View>
     </View>
