@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import SignUp from '../screens/Authentication/SignUp/SignUp';
+import SignUpScreen from '../screens/Authentication/SignUp/SignUpScreen';
 
 const RootNavigator = () => {
   return (
     <NavigationContainer>
-      <SignUp />
+      <SignUpScreen />
     </NavigationContainer>
   );
 };

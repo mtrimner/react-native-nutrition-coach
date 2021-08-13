@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, Dimensions} from 'react-native';
 
-import Picker from '../../../components/Picker';
+import Picker from '../../../../components/Picker';
 
 const {height, width} = Dimensions.get('window');
 
@@ -48,13 +48,7 @@ const HEIGHTOPTIONS = {
 
 const HeightSelector = ({onChange, selectedValue, onPress, error, touched}) => {
   return (
-    <View
-      style={{
-        backgroundColor: 'red',
-        width,
-        flex: 1,
-        paddingTop: height * 0.2,
-      }}>
+    <View>
       <Text style={{paddingHorizontal: 25, fontSize: 18, paddingBottom: 5}}>
         How Tall Are You?
       </Text>

@@ -16,13 +16,7 @@ const changeActiveButton = index => {
 
 const GenderSelect = () => {
   return (
-    <View
-      style={{
-        backgroundColor: 'orange',
-        width,
-        flex: 1,
-        paddingTop: height * 0.2,
-      }}>
+    <View>
       <Text>Gender Select</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         {RadioItems.map((item, index) => (

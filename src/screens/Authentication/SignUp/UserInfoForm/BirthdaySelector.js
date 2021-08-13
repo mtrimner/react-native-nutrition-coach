@@ -1,20 +1,13 @@
 import React from 'react';
 import {Text, View, Dimensions} from 'react-native';
 
-import DatePicker from '../../../components/DatePicker';
+import DatePicker from '../../../../components/DatePicker';
 
 const {height, width} = Dimensions.get('window');
 
 const BirthdaySelector = ({value, onChange, error, touched}) => {
-  console.log(error);
   return (
-    <View
-      style={{
-        backgroundColor: 'blue',
-        width,
-        flex: 1,
-        paddingTop: height * 0.2,
-      }}>
+    <View>
       <Text style={{paddingHorizontal: 25, fontSize: 18, paddingBottom: 5}}>
         When were you born?
       </Text>
