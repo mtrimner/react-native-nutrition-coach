@@ -11,8 +11,13 @@ import Animated, {
 
 import UserInfoForm from './UserInfoForm/UserInfoForm';
 import Dot from './Dot';
+import Message from './Message';
 
-const signupSlides = [{type: 'userInfoForm'}, {type: 'showMessage'}];
+const signupSlides = [
+  {type: 'showMessage1'},
+  {type: 'userInfoForm'},
+  {type: 'showMessage2'},
+];
 
 const SignUpSchema = yup.object().shape({
   height: yup
@@ -59,9 +64,23 @@ const SignUp = () => {
 
   const currentIndex = useDerivedValue(() => x.value / width);
 
-  const onPress = () => {
+  const onPress = number => {
+    scroll.current.scrollTo({
+      x: width * (index + number),
+      animated: true,
+    });
+  };
+
+  const next = () => {
     scroll.current.scrollTo({
       x: width * (index + 1),
+      animated: true,
+    });
+  };
+
+  const back = () => {
+    scroll.current.scrollTo({
+      x: width * (index + direction),
       animated: true,
     });
   };
@@ -80,10 +99,18 @@ const SignUp = () => {
           errors={errors}
           touched={touched}
           onChange={(field, value) => setFieldValue(field, value)}
+          onNewPress={direction => console.log(direction)}
         />
       );
-    } else if (type === 'showMessage') {
-      return <View style={{width, backgroundColor: 'grey', flex: 1}}></View>;
+    } else if (type === 'showMessage1') {
+      return <Message>Let us know a little bit about you</Message>;
+    } else if (type === 'showMessage2') {
+      return (
+        <Message>
+          Great! Let's create your account so you can start creating your
+          nutrition plan
+        </Message>
+      );
     }
   };
 
