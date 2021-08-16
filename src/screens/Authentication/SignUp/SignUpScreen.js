@@ -12,12 +12,13 @@ import Animated, {
 import UserInfoForm from './UserInfoForm/UserInfoForm';
 import Dot from './Dot';
 import Message from './Message';
-import {createIconSetFromFontello} from 'react-native-vector-icons';
+import RegistrationForm from './RegistrationForm';
 
 const signupSlides = [
   {type: 'showMessage1'},
   {type: 'userInfoForm'},
   {type: 'showMessage2'},
+  {type: 'registrationForm'},
 ];
 
 const SignUpSchema = yup.object().shape({
@@ -34,6 +35,12 @@ const SignUpSchema = yup.object().shape({
       value => differenceInYears(new Date(), new Date(value)) >= 16,
     ),
   gender: yup.string().required('Please select gender'),
+  firstName: yup.string().required('Name required with signing up with email'),
+  email: yup.string().email('Invalid email').required('Email required'),
+  password: yup
+    .string()
+    .min(6, 'Must be at least 6 characters')
+    .required('Please create a password'),
   currentWeight: yup
     .number()
     .when('units', {
@@ -105,6 +112,14 @@ const SignUp = () => {
           Great! Let's create your account so you can start creating your
           nutrition plan
         </Message>
+      );
+    } else if (type === 'registrationForm') {
+      return (
+        <RegistrationForm
+          onChange={(field, value) => {
+            setFieldValue(field, value);
+          }}
+        />
       );
     }
   };
