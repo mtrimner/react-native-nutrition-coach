@@ -14,10 +14,12 @@ const changeActiveButton = index => {
   RadioItems[index].selected = true;
 };
 
-const GenderSelect = () => {
+const GenderSelect = ({onGenderSelect}) => {
   return (
     <View>
-      <Text>Gender Select</Text>
+      <Text style={{paddingHorizontal: 25, fontSize: 18, paddingBottom: 5}}>
+        Gender Select
+      </Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         {RadioItems.map((item, index) => (
           <RadioButton
@@ -25,6 +27,7 @@ const GenderSelect = () => {
             label={item.label}
             selected={item.selected}
             icon={item.icon}
+            onPress={() => onGenderSelect(item.value)}
           />
         ))}
       </View>

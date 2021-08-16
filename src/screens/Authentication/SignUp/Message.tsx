@@ -4,18 +4,19 @@ import CircleButton from './CircleButton';
 
 interface MessageProps {
   children: string;
-  onNewPress: (direction: number) => void;
+  onPress: (direction: number, index: number) => void;
+  index: number;
 }
 const {height, width} = Dimensions.get('window');
 
-const Message = ({children, onNewPress}: MessageProps) => {
-  const handleOnPress = (direction: number) => {
-    onNewPress(direction);
-  };
+const NEXT = 1;
+const PREV = -1;
+
+const Message = ({children, onPress, index}: MessageProps) => {
   return (
     <View
       style={{
-        backgroundColor: 'red',
+        backgroundColor: '#ffffff',
         width,
         flex: 1,
       }}>
@@ -31,12 +32,12 @@ const Message = ({children, onNewPress}: MessageProps) => {
           justifyContent: 'center',
         }}>
         <CircleButton
-          onPress={() => handleOnPress(-1)}
+          onPress={() => onPress(PREV, index)}
           icon="chevron-back"
           style={{position: 'absolute', left: 30}}
         />
         <CircleButton
-          onPress={() => handleOnPress(1)}
+          onPress={() => onPress(NEXT, index)}
           icon="chevron-forward"
           style={{position: 'absolute', right: 30}}
         />

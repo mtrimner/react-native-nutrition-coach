@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Platform, Pressable, Modal, StyleSheet} from 'react-native';
 import {Picker as RnPicker} from '@react-native-picker/picker';
 
-const Picker = ({selectedValue, options, onChange, onPress}) => {
+const Picker = ({selectedValue, options, onChange, onPress}, ref) => {
   const [show, setShow] = useState(false);
 
   const onCancelPress = () => {

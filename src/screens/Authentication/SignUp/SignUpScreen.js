@@ -12,6 +12,7 @@ import Animated, {
 import UserInfoForm from './UserInfoForm/UserInfoForm';
 import Dot from './Dot';
 import Message from './Message';
+import {createIconSetFromFontello} from 'react-native-vector-icons';
 
 const signupSlides = [
   {type: 'showMessage1'},
@@ -32,6 +33,7 @@ const SignUpSchema = yup.object().shape({
       'Must be over 16',
       value => differenceInYears(new Date(), new Date(value)) >= 16,
     ),
+  gender: yup.string().required('Please select gender'),
   currentWeight: yup
     .number()
     .when('units', {
@@ -64,30 +66,16 @@ const SignUp = () => {
 
   const currentIndex = useDerivedValue(() => x.value / width);
 
-  const onPress = number => {
+  const onPress = (number, index) => {
     scroll.current.scrollTo({
       x: width * (index + number),
       animated: true,
     });
   };
 
-  const next = () => {
-    scroll.current.scrollTo({
-      x: width * (index + 1),
-      animated: true,
-    });
-  };
-
-  const back = () => {
-    scroll.current.scrollTo({
-      x: width * (index + direction),
-      animated: true,
-    });
-  };
-
   const {handleChange, values, errors, touched, setFieldValue} = useFormik({
     validationSchema: SignUpSchema,
-    initialValues: {height: 0, dob: new Date(), currentWeight: null},
+    initialValues: {height: 0, dob: new Date(), gender: ''},
   });
 
   const renderItem = (type, index) => {
@@ -98,15 +86,22 @@ const SignUp = () => {
           values={values}
           errors={errors}
           touched={touched}
-          onChange={(field, value) => setFieldValue(field, value)}
-          onNewPress={direction => console.log(direction)}
+          onChange={(field, value) => {
+            setFieldValue(field, value);
+          }}
+          onPress={onPress}
+          index={index}
         />
       );
     } else if (type === 'showMessage1') {
-      return <Message>Let us know a little bit about you</Message>;
+      return (
+        <Message onPress={onPress} key={index} index={index}>
+          Let us know a little bit about you
+        </Message>
+      );
     } else if (type === 'showMessage2') {
       return (
-        <Message>
+        <Message onPress={onPress} key={index} index={index}>
           Great! Let's create your account so you can start creating your
           nutrition plan
         </Message>
@@ -132,6 +127,7 @@ const SignUp = () => {
         horizontal
         snapToInterval={width}
         ref={scroll}
+        scrollEnabled={false}
         onScroll={onScroll}
         scrollEventThrottle={50}
         bounces={false}>

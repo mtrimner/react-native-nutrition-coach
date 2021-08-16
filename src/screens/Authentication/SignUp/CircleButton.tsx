@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     borderRadius: SIZE / 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'pink',
   },
 });
 
@@ -25,12 +24,24 @@ interface CircleButtonProps {
   onPress: () => void;
   icon: string;
   style: TouchableOpacityProps['style'];
+  disabled?: boolean;
 }
 
-const CircleButton = ({onPress, icon, style}: CircleButtonProps) => {
+const CircleButton = ({
+  onPress,
+  icon,
+  style,
+  disabled,
+  ...props
+}: CircleButtonProps) => {
+  const color = disabled ? 'pink' : 'green';
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
-      <Icon name={icon} size={30} />
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, {backgroundColor: color}, style]}
+      disabled={disabled}
+      {...props}>
+      <Icon name={icon} size={30} color="#ffffff" />
     </TouchableOpacity>
   );
 };
