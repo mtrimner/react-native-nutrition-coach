@@ -119,6 +119,9 @@ const SignUp = () => {
           onChange={(field, value) => {
             setFieldValue(field, value);
           }}
+          errors={errors}
+          touched={touched}
+          values={values}
         />
       );
     }
