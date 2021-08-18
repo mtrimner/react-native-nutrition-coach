@@ -145,7 +145,7 @@ const SignUp = () => {
         horizontal
         snapToInterval={width}
         ref={scroll}
-        scrollEnabled={false}
+        scrollEnabled={true}
         onScroll={onScroll}
         scrollEventThrottle={50}
         bounces={false}>
