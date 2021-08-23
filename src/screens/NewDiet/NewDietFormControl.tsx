@@ -1,25 +1,44 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import {FormikTouched, FormikErrors, FormikValues} from 'formik';
+import {MyFormValues} from './NewDietScreen';
 
 import RadioButtonGroup from './RadioButtonGroup';
+import AccordionButtonGroup from './AccordionButtonGroup';
 
 interface NewDietFormControlProps {
   control: string;
   options: {label: string; value: string; selected: boolean; icon: string}[];
-  onPress: () => void;
+  onPress: (field: string, value: string) => void;
+  errors: FormikErrors<MyFormValues>;
+  touched: FormikTouched<MyFormValues>;
+  values: FormikValues;
+  prompt: string;
 }
 
 const NewDietFormControl = ({
   control,
   options,
   onPress,
+  errors,
+  touched,
+  values,
+  prompt,
 }: NewDietFormControlProps) => {
   switch (control) {
-    case 'field1':
-      return <RadioButtonGroup options={options} onPress={onPress} />;
+    case 'goal':
+      return (
+        <RadioButtonGroup
+          options={options}
+          onPress={value => onPress(control, value)}
+          values={values}
+          fieldName={control}
+          prompt={prompt}
+        />
+      );
 
     case 'field2':
-      return <Text>field2</Text>;
+      return <AccordionButtonGroup />;
 
     case 'field3':
       'field3';

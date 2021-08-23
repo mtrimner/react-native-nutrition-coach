@@ -1,19 +1,30 @@
 import React from 'react';
 import {View, Text, Dimensions} from 'react-native';
+import {FormikValues} from 'formik';
 
 import RadioButton from './components/RadioButton';
 
 export interface RadioButtonGroupProps {
   options: {label: string; value: string; selected: boolean; icon: string}[];
-  onPress: () => void;
+  onPress: (value: string) => void;
+  values: FormikValues;
+  fieldName: string;
+  prompt: string;
 }
 
 const {width} = Dimensions.get('window');
 
-const RadioButtonGroup = ({options, onPress}: RadioButtonGroupProps) => {
+const RadioButtonGroup = ({
+  options,
+  onPress,
+  values,
+  fieldName,
+  prompt,
+}: RadioButtonGroupProps) => {
   // console.log(options);
   return (
     <View style={{width: width}}>
+      <Text>{prompt}</Text>
       {options.map((option, index) => {
         return (
           <View
@@ -25,8 +36,9 @@ const RadioButtonGroup = ({options, onPress}: RadioButtonGroupProps) => {
             <RadioButton
               key={index}
               label={option.label}
-              onPress={onPress}
-              selected={option.selected}
+              buttonValue={option.value}
+              onPress={() => onPress(option.value)}
+              selected={option.value === values[fieldName] ? true : false}
               icon={option.icon}
             />
           </View>

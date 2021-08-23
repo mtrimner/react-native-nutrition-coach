@@ -14,6 +14,7 @@ interface RadioButtonProps {
   onPress: () => void;
   icon: string;
   info?: string;
+  buttonValue: string;
 }
 
 const {height, width} = Dimensions.get('window');
@@ -24,11 +25,10 @@ const RadioButton = ({
   onPress,
   icon,
   info,
+  buttonValue,
 }: RadioButtonProps) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{backgroundColor: selected ? '#ffffff' : 'pink'}}>
+    <TouchableOpacity onPress={onPress}>
       <View
         style={{
           borderColor: 'white',
@@ -38,6 +38,7 @@ const RadioButton = ({
           width: width * 0.8,
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: selected ? '#ffffff' : 'pink',
         }}>
         <Text style={{position: 'absolute', top: 5}}>{label}</Text>
         <Icon name={icon} size={30} />

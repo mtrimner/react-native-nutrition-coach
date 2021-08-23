@@ -1,61 +1,25 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useRef} from 'react';
+import {Text, View, ScrollView, Dimensions} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import NewDietFormControl from './NewDietFormControl';
+import Animated, {
+  useSharedValue,
+  useAnimatedScrollHandler,
+  useDerivedValue,
+} from 'react-native-reanimated';
 
-const formFields = [
-  {
-    control: 'field1',
-    options: [
-      {
-        label: 'Lose Bodyfat',
-        value: 'lose',
-        selected: false,
-        icon: 'male-outline',
-      },
-      {
-        label: 'Maintain',
-        value: 'maintain',
-        selected: false,
-        icon: 'male-outline',
-      },
-      {
-        label: 'Build Muscle',
-        value: 'gain',
-        selected: false,
-        icon: 'male-outline',
-      },
-    ],
-  },
-  {
-    control: 'field2',
-    options: [
-      {
-        label: 'Test',
-        value: 'lose',
-        selected: false,
-        icon: 'male-outline',
-      },
-      {
-        label: 'Test',
-        value: 'maintain',
-        selected: false,
-        icon: 'male-outline',
-      },
-      {
-        label: 'Test',
-        value: 'gain',
-        selected: false,
-        icon: 'male-outline',
-      },
-    ],
-  },
-];
+import NewDietFormControl from './NewDietFormControl';
+import {formFields} from './constants/formFields';
+
+export interface MyFormValues {
+  goal: string;
+}
 
 const NewDietSchema = Yup.object().shape({
   goal: Yup.string().required('Required'),
 });
+
+const {width} = Dimensions.get('window');
 
 const NewDietScreen = () => {
   const {handleChange, values, errors, touched, setFieldValue} = useFormik({
@@ -63,21 +27,45 @@ const NewDietScreen = () => {
     initialValues: {goal: ''},
     onSubmit: values => console.log('values'),
   });
-  console.log(formFields[0].options);
-  console.log('test scren');
+
+  const scroll = useRef<Animated.ScrollView>(null);
+  const x = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: ({contentOffset}) => {
+      x.value = contentOffset.x;
+    },
+  });
+  const currentIndex = useDerivedValue(() => x.value / width);
+
+  console.log(values);
+
   return (
-    <View style={{backgroundColor: 'orange', flex: 1}}>
+    <Animated.ScrollView
+      horizontal
+      snapToInterval={width}
+      ref={scroll}
+      scrollEnabled={true}
+      onScroll={onScroll}
+      scrollEventThrottle={50}
+      bounces={false}>
       {formFields.map((field, index) => {
         return (
           <NewDietFormControl
             key={index}
             control={field.control}
             options={field.options}
-            onPress={() => console.log('Press')}
+            onPress={(field, value) => {
+              console.log(field, value);
+              setFieldValue(field, value);
+            }}
+            errors={errors}
+            touched={touched}
+            values={values}
+            prompt={field.prompt}
           />
         );
       })}
-    </View>
+    </Animated.ScrollView>
   );
 };
 
