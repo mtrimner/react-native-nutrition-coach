@@ -1,9 +1,8 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -17,18 +16,24 @@ const styles = StyleSheet.create({
 export interface OptionItem {
   label: string;
   value: string;
+  icon?: string;
 }
 
 interface OptionProps {
   item: OptionItem;
   isLast: boolean;
+  onPress: (value: string) => void;
+  selected: boolean;
 }
 
-const Option = ({item, isLast}: OptionProps) => {
+const Option = ({item, isLast, onPress, selected}: OptionProps) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={[styles.container, {backgroundColor: selected ? 'blue' : 'grey'}]}
+      onPress={() => onPress(item.value)}>
       <Text>{item.label}</Text>
-    </View>
+      <Text>Alert</Text>
+    </TouchableOpacity>
   );
 };
 

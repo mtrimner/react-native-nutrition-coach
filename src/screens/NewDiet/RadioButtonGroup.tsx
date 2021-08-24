@@ -9,7 +9,7 @@ export interface RadioButtonGroupProps {
   onPress: (value: string) => void;
   values: FormikValues;
   fieldName: string;
-  prompt: string;
+  fieldQuestion: string;
 }
 
 const {width} = Dimensions.get('window');
@@ -19,12 +19,12 @@ const RadioButtonGroup = ({
   onPress,
   values,
   fieldName,
-  prompt,
+  fieldQuestion,
 }: RadioButtonGroupProps) => {
   // console.log(options);
   return (
     <View style={{width: width}}>
-      <Text>{prompt}</Text>
+      <Text>{fieldQuestion}</Text>
       {options.map((option, index) => {
         return (
           <View

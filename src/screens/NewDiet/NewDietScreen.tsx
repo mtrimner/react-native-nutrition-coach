@@ -13,10 +13,18 @@ import {formFields} from './constants/formFields';
 
 export interface MyFormValues {
   goal: string;
+  exercise: string;
+  exerciseIntensity: string;
 }
 
 const NewDietSchema = Yup.object().shape({
   goal: Yup.string().required('Required'),
+  exercise: Yup.string().required('Required'),
+  exerciseIntensity: Yup.string().when('exercise', {
+    is: (value: string) => value !== 'none',
+    then: Yup.string().required('Select exercise intensity'),
+    otherwise: Yup.string(),
+  }),
 });
 
 const {width} = Dimensions.get('window');
@@ -24,7 +32,7 @@ const {width} = Dimensions.get('window');
 const NewDietScreen = () => {
   const {handleChange, values, errors, touched, setFieldValue} = useFormik({
     validationSchema: NewDietSchema,
-    initialValues: {goal: ''},
+    initialValues: {goal: '', exercise: '', exerciseIntensity: 'none'},
     onSubmit: values => console.log('values'),
   });
 
@@ -36,9 +44,6 @@ const NewDietScreen = () => {
     },
   });
   const currentIndex = useDerivedValue(() => x.value / width);
-
-  console.log(values);
-
   return (
     <Animated.ScrollView
       horizontal
@@ -53,15 +58,14 @@ const NewDietScreen = () => {
           <NewDietFormControl
             key={index}
             control={field.control}
-            options={field.options}
             onPress={(field, value) => {
-              console.log(field, value);
               setFieldValue(field, value);
             }}
             errors={errors}
             touched={touched}
             values={values}
-            prompt={field.prompt}
+            fieldQuestion={field.fieldQuestion}
+            setFieldValue={setFieldValue}
           />
         );
       })}

@@ -10,35 +10,49 @@ import Animated, {
   withTiming,
   runOnUI,
 } from 'react-native-reanimated';
-import HeightSelector from '../../../Authentication/SignUp/UserInfoForm/HeightSelector';
+import {FormikValues} from 'formik';
 
-import Option, {OptionItem} from './Option';
+import Option from './Option';
 
-export interface AccordionButton {
-  title: string;
-  options: OptionItem[];
-}
-
-interface OptionProps {
-  options: AccordionButton;
+export interface AccordionButtonProps {
+  option: {
+    title: string;
+    value: string;
+    options: {label: string; value: string; icon?: string}[] | null;
+  };
+  onPress: (value: string) => void;
+  setFieldValue: (field: string, value: string) => void;
+  control: string;
+  subFieldName: string;
+  selected: boolean;
+  values: FormikValues;
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
-    backgroundColor: 'white',
+    marginTop: 60,
     padding: 16,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginHorizontal: 20,
   },
   items: {
     overflow: 'hidden',
+    marginHorizontal: 20,
+    backgroundColor: 'red',
   },
 });
-const AccordionButton = ({options}: OptionProps) => {
+const AccordionButton = ({
+  option,
+  onPress,
+  setFieldValue,
+  control,
+  subFieldName,
+  selected,
+  values,
+}: AccordionButtonProps) => {
   const aref = useAnimatedRef<View>();
   const open = useSharedValue(false);
   const progress = useDerivedValue(() =>
@@ -58,16 +72,25 @@ const AccordionButton = ({options}: OptionProps) => {
     <>
       <TouchableWithoutFeedback
         onPress={() => {
-          if (height.value === 0) {
-            runOnUI(() => {
-              'worklet';
-              height.value = measure(aref).height;
-            })();
+          if (option.options !== null) {
+            if (height.value === 0) {
+              runOnUI(() => {
+                'worklet';
+                height.value = measure(aref).height;
+              })();
+            }
+            open.value = !open.value;
+          } else {
+            setFieldValue(control, option.value);
           }
-          open.value = !open.value;
         }}>
-        <Animated.View style={[styles.container, headerStyle]}>
-          <Text>button label</Text>
+        <Animated.View
+          style={[
+            styles.container,
+            headerStyle,
+            {backgroundColor: selected ? '#ffffff' : 'orange'},
+          ]}>
+          <Text>{option.title}</Text>
         </Animated.View>
       </TouchableWithoutFeedback>
       <Animated.View style={[styles.items, style]}>
@@ -78,13 +101,22 @@ const AccordionButton = ({options}: OptionProps) => {
               layout: {height: h},
             },
           }) => console.log({h})}>
-          {options.options.map((item, key) => (
-            <Option
-              key={key}
-              isLast={key === options.options.length - 1}
-              item={item}
-            />
-          ))}
+          {option.options !== null
+            ? option.options.map((item, key) => (
+                <Option
+                  key={key}
+                  isLast={
+                    option.options !== null && key === option.options.length - 1
+                  }
+                  item={item}
+                  onPress={value => {
+                    setFieldValue(control, option.value);
+                    setFieldValue(subFieldName, value);
+                  }}
+                  selected={item.value === values[subFieldName] ? true : false}
+                />
+              ))
+            : null}
         </View>
       </Animated.View>
     </>

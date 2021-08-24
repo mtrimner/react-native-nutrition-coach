@@ -5,40 +5,53 @@ import {MyFormValues} from './NewDietScreen';
 
 import RadioButtonGroup from './RadioButtonGroup';
 import AccordionButtonGroup from './AccordionButtonGroup';
+import {exerciseSelect, goal} from './constants/formFields';
 
 interface NewDietFormControlProps {
   control: string;
-  options: {label: string; value: string; selected: boolean; icon: string}[];
   onPress: (field: string, value: string) => void;
   errors: FormikErrors<MyFormValues>;
   touched: FormikTouched<MyFormValues>;
   values: FormikValues;
-  prompt: string;
+  fieldQuestion: string;
+  // title?: string;
+  setFieldValue: (field: string, value: any) => void;
 }
 
 const NewDietFormControl = ({
   control,
-  options,
   onPress,
   errors,
   touched,
   values,
-  prompt,
+  fieldQuestion,
+  setFieldValue,
 }: NewDietFormControlProps) => {
   switch (control) {
     case 'goal':
       return (
         <RadioButtonGroup
-          options={options}
+          options={goal.options}
           onPress={value => onPress(control, value)}
           values={values}
           fieldName={control}
-          prompt={prompt}
+          fieldQuestion={fieldQuestion}
         />
       );
 
-    case 'field2':
-      return <AccordionButtonGroup />;
+    case 'exercise':
+      return (
+        <AccordionButtonGroup
+          options={exerciseSelect}
+          values={values}
+          fieldName={control}
+          subFieldName="exerciseIntensity"
+          fieldQuestion={fieldQuestion}
+          onPress={value => onPress(control, value)}
+          setFieldValue={setFieldValue}
+          control={control}
+        />
+      );
 
     case 'field3':
       'field3';
